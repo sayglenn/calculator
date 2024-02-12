@@ -1,0 +1,108 @@
+body {
+    background-color: bisque;
+}
+
+.container {
+    height: 600px;
+    width: 425px;
+    background-color: gray;
+    margin: auto;
+    margin-top: 110px;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 2);
+    border-radius: 30px;
+    padding: 20px;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    width: 425px;
+    height: 125px;
+    background-color: rgb(200, 200, 200); 
+    border-radius: 30px;
+    border: 3px solid;
+    margin: auto;
+}
+
+.operation-preview, .display-value {
+    text-align: right;
+    font-family: 'PremierSans-Regular', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.operation-preview {
+    height: 40px;
+    font-size: 36px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    margin-right: 25px;
+}
+
+.display-value {
+    margin-top: 0;
+    height: 80px;
+    font-size: 60px;
+    margin-right: 20px;
+}
+
+button:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.top-buttons {
+    display: flex;
+    margin-top: 20px;
+}
+
+.delete, .clear {
+    flex: 1;
+    text-align: center;
+    border-radius: 30px;
+    font-size: 24px;
+    box-shadow: 0 9px #999;
+    border: 2px solid;
+    height: 55px;
+}
+
+.delete {
+    margin-right: 10px;
+    background-color: rgb(123, 251, 251);
+}
+
+.clear {
+    margin-left: 10px;
+    background-color: rgb(255, 102, 102);
+}
+
+.first-row, .second-row, .third-row, .fourth-row {
+    display: flex;
+    margin-top: 20px;
+}
+
+.seven, .eight, .nine, .divide, .four, .five, 
+.six, .multiply, .one, .two, .three, .add,
+.dot, .zero, .equal, .subtract {
+    flex: 1;
+    font-size: 24px;
+    box-shadow: 0 9px #999;
+    border-radius: 30px;
+    height: 75px;
+    border: 2px solid;
+}
+
+.eight, .five, .two, .zero {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.nine, .six, .three, .equal {
+    margin-right: 10px;
+}
+
+.divide, .multiply, .add, .subtract {
+    background-color: rgb(252, 159, 252);
+}
+
+.dot, .equal {
+    background-color: rgb(254, 255, 197);
+}
