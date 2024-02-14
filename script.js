@@ -15,7 +15,9 @@ function divide(x, y) {
 }
 
 function reduceNumber(number) {
-    if (number > 999999999) {
+    if (number == 0) {
+        return number;
+    } else if (number > 999999999) {
         let counter = 0;
         while (number.toString().length > 7) {
             number = Math.floor(number / 10);
@@ -30,7 +32,6 @@ function reduceNumber(number) {
         while (currString.length < 7) {
             number = number * 10;
             curr = Math.floor(number);
-            console.log(curr);
             currString = curr.toString();
             counter += 1;
         } 
@@ -80,13 +81,13 @@ numbersArray.forEach(num =>
     num.addEventListener("click", () => {
         if (currOperator == "") {
             const numStringOne = firstInput.toString();
-            if (numStringOne.length < 11 || !numStringOne.includes("e")) {
+            if (numStringOne.length < 11 && !numStringOne.includes("e")) {
                 firstInput = firstInput * 10 + stringToNum(num.id);
                 displayValue.textContent = firstInput;
             }
         } else {
             const numStringTwo = secondInput.toString();
-            if (numStringTwo.length < 11 || !numStringTwo.includes("e")) {
+            if (numStringTwo.length < 11 && !numStringTwo.includes("e")) {
                 secondInput = secondInput * 10 + stringToNum(num.id);
                 displayValue.textContent = secondInput;
             }
@@ -154,7 +155,7 @@ equalButton.addEventListener("click", () => {
         // 
     } else {
         if (currOperator == "add") {
-            firstInput = add(firstInput, secondInput);
+            firstInput = add(Number(firstInput), secondInput);
             firstInput = reduceNumber(firstInput);
             displayValue.textContent = firstInput;
             secondInput = 0;
@@ -162,7 +163,7 @@ equalButton.addEventListener("click", () => {
             dotCounter = 1;
             operationPreview.textContent = "\u00A0";
         } else if (currOperator == "subtract") {
-            firstInput = subtract(firstInput, secondInput);
+            firstInput = subtract(Number(firstInput), secondInput);
             firstInput = reduceNumber(firstInput);
             displayValue.textContent = firstInput;
             secondInput = 0;
@@ -170,7 +171,7 @@ equalButton.addEventListener("click", () => {
             dotCounter = 1;
             operationPreview.textContent = "\u00A0";
         } else if (currOperator == "multiply") {
-            firstInput = multiply(firstInput, secondInput);
+            firstInput = multiply(Number(firstInput), secondInput);
             firstInput = reduceNumber(firstInput);
             displayValue.textContent = firstInput;
             secondInput = 0;
@@ -179,7 +180,7 @@ equalButton.addEventListener("click", () => {
             operationPreview.textContent = "\u00A0";
         } else {
             if (secondInput !== 0) {
-                firstInput = divide(firstInput, secondInput);
+                firstInput = divide(Number(firstInput), secondInput);
                 firstInput = reduceNumber(firstInput);
                 displayValue.textContent = firstInput;
                 secondInput = 0;
