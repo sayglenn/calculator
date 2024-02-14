@@ -14,9 +14,35 @@ function divide(x, y) {
     return x / y;
 }
 
+function reduceNumber(number) {
+    if (number > 999999999) {
+        let counter = 0;
+        while (number.toString().length > 7) {
+            number = Math.floor(number / 10);
+            counter++;
+        }
+        let result = number * Math.pow(10, counter)
+        return (number * Math.pow(10, counter)).toExponential();
+    } else {
+        let curr = Math.floor(number);
+        let currString = curr.toString();
+        let counter = 0;
+        while (currString.length < 7) {
+            number = number * 10;
+            curr = Math.floor(number);
+            console.log(curr);
+            currString = curr.toString();
+            counter += 1;
+        } 
+        return curr / Math.pow(10, counter);
+    }
+}
+    
+
 let firstInput = 0;
 let secondInput = 0;
 let currOperator = "";
+let dotCounter = 1;
 
 const numDictionary = {
     "one": 1,
@@ -53,22 +79,36 @@ const numbersArray = document.querySelectorAll(".number");
 numbersArray.forEach(num => 
     num.addEventListener("click", () => {
         if (currOperator == "") {
-            const numString = firstInput.toString();
-            if (numString.length < 11) {
+            const numStringOne = firstInput.toString();
+            if (numStringOne.length < 11 || !numStringOne.includes("e")) {
                 firstInput = firstInput * 10 + stringToNum(num.id);
                 displayValue.textContent = firstInput;
             }
         } else {
-            secondInput = secondInput * 10 + stringToNum(num.id);
-            displayValue.textContent = secondInput;
+            const numStringTwo = secondInput.toString();
+            if (numStringTwo.length < 11 || !numStringTwo.includes("e")) {
+                secondInput = secondInput * 10 + stringToNum(num.id);
+                displayValue.textContent = secondInput;
+            }
         }
     }));
 
 const operatorsArray = document.querySelectorAll(".operator");
 operatorsArray.forEach(operator =>
     operator.addEventListener("click", () => {
-        currOperator = operator.id;
-        operationPreview.textContent = firstInput + " " + stringToOp(currOperator) + " ";
+        if (currOperator == "") {
+            currOperator = operator.id;
+            operationPreview.textContent = firstInput + " " + stringToOp(currOperator) + " ";
+            displayValue.textContent = secondInput;
+            dotCounter = 1;
+        } else {
+            equalButton.click();
+            currOperator = operator.id;
+            operationPreview.textContent = firstInput + " " + stringToOp(currOperator) + " "
+            secondInput = 0;
+            dotCounter = 1;
+            displayValue.textContent = secondInput;
+        }
     }))
 
 const clearButton = document.querySelector(".clear");
@@ -82,11 +122,29 @@ clearButton.addEventListener("click", () => {
 const deleteButton = document.querySelector(".delete");
 deleteButton.addEventListener("click", () => {
     if (currOperator == "") {
-        firstInput = Math.floor(firstInput / 10);
-        displayValue.textContent = firstInput;
+        if (firstInput.toString().includes("e")) {
+            firstInput = Math.floor(firstInput / 10);
+            if (firstInput > 999999999) {
+                firstInput = firstInput.toExponential();
+            }
+            displayValue.textContent = firstInput;
+        } else {
+            firstInput = firstInput.toString();
+            firstInput = firstInput.substring(0, firstInput.length - 1);
+            displayValue.textContent = Number(firstInput);
+        }
     } else {
-        secondInput = Math.floor(secondInput / 10);
-        displayValue.textContent = secondInput;
+        if (secondInput.toString().includes("e")) {
+            secondInput = Math.floor(secondInput / 10);
+            if (secondInput > 999999999) {
+                secondInput = secondInput.toExponential();
+            }
+            displayValue.textContent = secondInput;
+        } else {
+            firstInput = firstInput.toString();
+            firstInput = firstInput.substring(0, firstInput.length - 1);
+            displayValue.textContent = Number(firstInput);
+        }
     }
 })
 
@@ -97,28 +155,36 @@ equalButton.addEventListener("click", () => {
     } else {
         if (currOperator == "add") {
             firstInput = add(firstInput, secondInput);
+            firstInput = reduceNumber(firstInput);
             displayValue.textContent = firstInput;
             secondInput = 0;
             currOperator = "";
+            dotCounter = 1;
             operationPreview.textContent = "\u00A0";
         } else if (currOperator == "subtract") {
             firstInput = subtract(firstInput, secondInput);
+            firstInput = reduceNumber(firstInput);
             displayValue.textContent = firstInput;
             secondInput = 0;
             currOperator = "";
+            dotCounter = 1;
             operationPreview.textContent = "\u00A0";
         } else if (currOperator == "multiply") {
             firstInput = multiply(firstInput, secondInput);
+            firstInput = reduceNumber(firstInput);
             displayValue.textContent = firstInput;
             secondInput = 0;
             currOperator = "";
+            dotCounter = 1;
             operationPreview.textContent = "\u00A0";
         } else {
             if (secondInput !== 0) {
                 firstInput = divide(firstInput, secondInput);
+                firstInput = reduceNumber(firstInput);
                 displayValue.textContent = firstInput;
                 secondInput = 0;
                 currOperator = "";
+                dotCounter = 1;
                 operationPreview.textContent = "\u00A0";
             } else {
                 alert("You cannot divide by 0!");
@@ -126,3 +192,7 @@ equalButton.addEventListener("click", () => {
         }
     }
 })
+
+const nothing = document.querySelector(".nothing");
+nothing.addEventListener("click", () => 
+    window.open("https:www.github.com/sayglenn", "_blank"));

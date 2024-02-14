@@ -79,13 +79,17 @@ button:active {
     margin-top: 20px;
 }
 
-.number, .operator, .dot, .equal {
+.number, .operator, .dot, .equal, .nothing {
     flex: 1;
     font-size: 24px;
     box-shadow: 0 9px #999;
     border-radius: 30px;
     height: 75px;
     border: 2px solid;
+}
+
+.nothing {
+    background-color: rgb(69, 69, 69);
 }
 
 #eight, #five, #two, #zero {
@@ -101,6 +105,6 @@ button:active {
     background-color: rgb(252, 159, 252);
 }
 
-.dot, .equal {
+.equal {
     background-color: rgb(254, 255, 197);
 }
